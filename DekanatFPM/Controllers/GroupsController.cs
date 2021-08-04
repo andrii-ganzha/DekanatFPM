@@ -33,6 +33,10 @@ namespace DekanatFPM.Controllers
             {
                 return HttpNotFound();
             }
+
+            var students = db.Students.Where(s => s.GroupID == id);
+            ViewBag.Students = students.ToList();
+
             return View(group);
         }
 
