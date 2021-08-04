@@ -168,14 +168,24 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SpecializationsController.cs" />
+    <Compile Include="Controllers\SpecialtiesController.cs" />
+    <Compile Include="Controllers\StudentsController.cs" />
+    <Compile Include="Controllers\TrainingDirectionsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Group.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Specialization.cs" />
+    <Compile Include="Models\Specialty.cs" />
+    <Compile Include="Models\Student.cs" />
+    <Compile Include="Models\TrainingDirection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -235,6 +245,31 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Groups\Create.cshtml" />
+    <Content Include="Views\Groups\Delete.cshtml" />
+    <Content Include="Views\Groups\Details.cshtml" />
+    <Content Include="Views\Groups\Edit.cshtml" />
+    <Content Include="Views\Groups\Index.cshtml" />
+    <Content Include="Views\Specializations\Create.cshtml" />
+    <Content Include="Views\Specializations\Delete.cshtml" />
+    <Content Include="Views\Specializations\Details.cshtml" />
+    <Content Include="Views\Specializations\Edit.cshtml" />
+    <Content Include="Views\Specializations\Index.cshtml" />
+    <Content Include="Views\Specialties\Create.cshtml" />
+    <Content Include="Views\Specialties\Delete.cshtml" />
+    <Content Include="Views\Specialties\Details.cshtml" />
+    <Content Include="Views\Specialties\Edit.cshtml" />
+    <Content Include="Views\Specialties\Index.cshtml" />
+    <Content Include="Views\Students\Create.cshtml" />
+    <Content Include="Views\Students\Delete.cshtml" />
+    <Content Include="Views\Students\Details.cshtml" />
+    <Content Include="Views\Students\Edit.cshtml" />
+    <Content Include="Views\Students\Index.cshtml" />
+    <Content Include="Views\TrainingDirections\Create.cshtml" />
+    <Content Include="Views\TrainingDirections\Delete.cshtml" />
+    <Content Include="Views\TrainingDirections\Details.cshtml" />
+    <Content Include="Views\TrainingDirections\Edit.cshtml" />
+    <Content Include="Views\TrainingDirections\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

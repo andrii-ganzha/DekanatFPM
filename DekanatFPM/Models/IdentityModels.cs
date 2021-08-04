@@ -25,6 +25,12 @@ namespace DekanatFPM.Models
         {
         }
 
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<Specialty> Specialties { get; set; }
+        public DbSet<Specialization> Specializations { get; set; }
+        public DbSet<Student> Students { get; set; }
+        public DbSet<TrainingDirection> TrainingDirections { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
