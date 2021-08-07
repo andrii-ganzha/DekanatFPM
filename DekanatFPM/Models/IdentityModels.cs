@@ -36,7 +36,5 @@ namespace DekanatFPM.Models
         {
             return new ApplicationDbContext();
         }
-
-        public System.Data.Entity.DbSet<DekanatFPM.Models.YearIndividualPlan> YearIndividualPlans { get; set; }
     }
 }

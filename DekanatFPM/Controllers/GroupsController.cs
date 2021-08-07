@@ -117,6 +117,12 @@ namespace DekanatFPM.Controllers
                     subjects.Add(subject);
                     numberRow++;
                 }
+
+                var students = db.Groups.Where(g => g.GroupID == groupID).First().Students.ToList();
+                for(int i=0; i<students.Count; i++)
+                {
+                   
+                }
             }
 
             return View(plan);
