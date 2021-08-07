@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ClosedXML.Excel;
 using DekanatFPM.Models;
 
 namespace DekanatFPM.Controllers
@@ -63,6 +64,62 @@ namespace DekanatFPM.Controllers
 
             ViewBag.SpecializationID = new SelectList(db.Specializations, "SpecializationID", "Name", group.SpecializationID);
             return View(group);
+        }
+
+        private int? ControlTextParser(string text)
+        {
+            if (text.Length == 0)
+            {
+                return null;
+            }
+            return int.Parse(text[0].ToString());
+        }
+
+        //GET: Groups/AddIndividualPlan
+        public ActionResult AddIndividualPlan(int groupID)
+        {
+            ViewBag.GroupID = groupID;
+            return View();
+        }
+        
+        //POST: Groups/AddIndividualPlan
+        [HttpPost]
+        public ActionResult AddIndividualPlan(HttpPostedFileBase file, YearIndividualPlan plan, int groupID)
+        {
+            using (XLWorkbook workBook = new XLWorkbook(file.InputStream, XLEventTracking.Disabled))
+            {
+                IXLWorksheet workSheet = workBook.Worksheets.First();
+                string text = workSheet.Cell(5, "o").Value.ToString();
+                plan.Year = int.Parse(text[0].ToString());
+
+                List<Subject> subjects = new List<Subject>();
+                int numberRow = 10;
+
+                while(workSheet.Cell(numberRow,"A").Value.ToString() != "")
+                {
+                    Subject subject = new Subject();
+                    subject.GroupID = 1;
+                    subject.Name = workSheet.Cell(numberRow, "B").Value.ToString();
+                    subject.Year = plan.Year;
+                    
+                    text = workSheet.Cell(numberRow, "G").Value.ToString();
+                    subject.ControlExam = ControlTextParser(text);
+                    
+                    text = workSheet.Cell(numberRow, "H").Value.ToString();
+                    subject.ControlCredit = ControlTextParser(text);
+                    
+                    text = workSheet.Cell(numberRow, "I").Value.ToString();
+                    subject.ControlCourseWork = ControlTextParser(text);
+                    
+                    text = workSheet.Cell(numberRow, "J").Value.ToString();
+                    subject.ControlIndividual = ControlTextParser(text);
+
+                    subjects.Add(subject);
+                    numberRow++;
+                }
+            }
+
+            return View(plan);
         }
 
         // GET: Groups/Edit/5

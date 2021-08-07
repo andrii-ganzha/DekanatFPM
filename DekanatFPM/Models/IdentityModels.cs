@@ -30,10 +30,13 @@ namespace DekanatFPM.Models
         public DbSet<Specialization> Specializations { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<TrainingDirection> TrainingDirections { get; set; }
+        public DbSet<YearIndividualPlan> YearIndividualPlans { get; set; }
 
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<DekanatFPM.Models.YearIndividualPlan> YearIndividualPlans { get; set; }
     }
 }
