@@ -53,10 +53,35 @@ namespace DekanatFPM.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "GroupID,SpecializationID,Type")] Group group)
+        public ActionResult Create([Bind(Include = "GroupID,SpecializationID,Type,Number,StartYear")] Group group)
         {
             if (ModelState.IsValid)
             {
+                var specialization = db.Specializations.Find(group.SpecializationID);
+                string year = group.StartYear.ToString();
+                year = year[2].ToString() + year[3].ToString();
+                string name = specialization.ShortName + "-" + year;
+                if(group.Type==TypeGroup.School)
+                {
+                    group.Duration = 4;
+                }
+                if(group.Type==TypeGroup.College)
+                {
+                    name += "у";
+                    group.Duration = 3;
+                }
+                if(group.Type==TypeGroup.Master)
+                {
+                    name += "м";
+                    group.Duration = 2;
+                }
+                if(group.Type==TypeGroup.Postgraduate)
+                {
+                    name += "а";
+                    group.Duration = 4;
+                }
+                name += "-" + group.Number;
+                group.Name = name;
                 db.Groups.Add(group);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -216,9 +241,9 @@ namespace DekanatFPM.Controllers
                     }
                 }
                 var students = db.Students.Where(g => g.GroupID == groupID).ToList();
+                var plans = db.YearIndividualPlans.Include(p => p.Student).Where(p => p.Student.GroupID == groupID).ToList();
                 for (int i = 0; i < students.Count; i++)
                 {
-                    var plans = db.YearIndividualPlans.Include(p => p.Student).Where(p=>p.Student.GroupID==groupID).ToList();
                     var planToDelit = plans.Where(p => p.StudentID == students[i].StudentID).Where(p=>p.Year==plan.Year).First();
                     if (planToDelit != null)
                     {
@@ -255,10 +280,35 @@ namespace DekanatFPM.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "GroupID,SpecializationID,Type")] Group group)
+        public ActionResult Edit([Bind(Include = "GroupID,SpecializationID,Type,Number,StartYear")] Group group)
         {
             if (ModelState.IsValid)
             {
+                var specialization = db.Specializations.Find(group.SpecializationID);
+                string year = group.StartYear.ToString();
+                year = year[2].ToString() + year[3].ToString();
+                string name = specialization.ShortName + "-" + year;
+                if (group.Type == TypeGroup.School)
+                {
+                    group.Duration = 4;
+                }
+                if (group.Type == TypeGroup.College)
+                {
+                    name += "у";
+                    group.Duration = 3;
+                }
+                if (group.Type == TypeGroup.Master)
+                {
+                    name += "м";
+                    group.Duration = 2;
+                }
+                if (group.Type == TypeGroup.Postgraduate)
+                {
+                    name += "а";
+                    group.Duration = 4;
+                }
+                name += "-" + group.Number;
+                group.Name = name;
                 db.Entry(group).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
