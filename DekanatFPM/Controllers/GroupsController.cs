@@ -101,21 +101,22 @@ namespace DekanatFPM.Controllers
         }
 
         //GET: Groups/AddIndividualPlan
-        public ActionResult AddIndividualPlan(int groupID)
+        public ActionResult AddIndividualPlan(int groupID, int year)
         {
             ViewBag.GroupID = groupID;
+            ViewBag.Year = year;
             return View();
         }
         
         //POST: Groups/AddIndividualPlan
         [HttpPost]
-        public ActionResult AddIndividualPlan(HttpPostedFileBase file, YearIndividualPlan plan, int groupID)
+        public ActionResult AddIndividualPlan(HttpPostedFileBase file, YearIndividualPlan plan, int groupID, int year)
         {
             using (XLWorkbook workBook = new XLWorkbook(file.InputStream, XLEventTracking.Disabled))
             {
                 IXLWorksheet workSheet = workBook.Worksheets.First();
                 string text = workSheet.Cell(5, "o").Value.ToString();
-                plan.Year = int.Parse(text[0].ToString());
+                plan.Year = year;
 
                 List<Subject> subjects = new List<Subject>();
                 int numberRow = 10;
@@ -125,7 +126,7 @@ namespace DekanatFPM.Controllers
                     Subject subject = new Subject();
                     subject.GroupID = groupID;
                     subject.Name = workSheet.Cell(numberRow, "B").Value.ToString();
-                    subject.Year = plan.Year;
+                    subject.Year = year;
                     
                     text = workSheet.Cell(numberRow, "G").Value.ToString();
                     subject.ControlExam = ControlTextParser(text);
@@ -144,34 +145,38 @@ namespace DekanatFPM.Controllers
                 }
                 db.Subjects.AddRange(subjects);
                 db.SaveChanges();
-                var students = db.Students.Where(g => g.GroupID == groupID).ToList();
+                var students = db.Students.Where(s => s.GroupID == groupID).Where(s => s.PlanWithGroup == true).ToList();
                 for(int i=0; i<students.Count; i++)
                 {
-                    plan.StudentID = i + 1;
+                    plan.StudentID = students[i].StudentID;
                     var planToAdd = new YearIndividualPlan(plan);
                     db.YearIndividualPlans.Add(planToAdd);
                     db.SaveChanges();
                 }
+                var group = db.Groups.Find(groupID);
+                group.YearsIndividualPlans = group.YearsIndividualPlans + $"{year}";
+                db.Entry(group).State = EntityState.Modified;
+                db.SaveChanges();
             }
-
             return View(plan);
         }
 
-        public ActionResult EditIndividualPlan(int groupID)
+        public ActionResult EditIndividualPlan(int groupID, int year)
         {
             ViewBag.GroupId = groupID;
+            ViewBag.Year = year;
             return View();
         }
         
         //POST: Groups/EditIndividualPlan
         [HttpPost]
-        public ActionResult EditIndividualPlan(HttpPostedFileBase file, YearIndividualPlan plan, int groupID)
+        public ActionResult EditIndividualPlan(HttpPostedFileBase file, YearIndividualPlan plan, int groupID, int year)
         {
             using (XLWorkbook workBook = new XLWorkbook(file.InputStream, XLEventTracking.Disabled))
             {
                 IXLWorksheet workSheet = workBook.Worksheets.First();
                 string text = workSheet.Cell(5, "o").Value.ToString();
-                plan.Year = int.Parse(text[0].ToString());
+                plan.Year = year;
 
                 //List<Subject> subjects = new List<Subject>();
                 int numberRow = 10;
@@ -186,7 +191,7 @@ namespace DekanatFPM.Controllers
                         //Subject subject = new Subject();
                         currentSubjects[subjectCount].GroupID = groupID;
                         currentSubjects[subjectCount].Name = workSheet.Cell(numberRow, "B").Value.ToString();
-                        currentSubjects[subjectCount].Year = plan.Year;
+                        currentSubjects[subjectCount].Year = year;
 
                         text = workSheet.Cell(numberRow, "G").Value.ToString();
                         currentSubjects[subjectCount].ControlExam = ControlTextParser(text);
@@ -208,7 +213,7 @@ namespace DekanatFPM.Controllers
                         Subject subject = new Subject();
                         subject.GroupID = groupID;
                         subject.Name = workSheet.Cell(numberRow, "B").Value.ToString();
-                        subject.Year = plan.Year;
+                        subject.Year = year;
 
                         text = workSheet.Cell(numberRow, "G").Value.ToString();
                         subject.ControlExam = ControlTextParser(text);
@@ -240,7 +245,7 @@ namespace DekanatFPM.Controllers
                         db.SaveChanges();
                     }
                 }
-                var students = db.Students.Where(g => g.GroupID == groupID).ToList();
+                var students = db.Students.Where(s => s.GroupID == groupID).Where(s=>s.PlanWithGroup==true).ToList();
                 var plans = db.YearIndividualPlans.Include(p => p.Student).Where(p => p.Student.GroupID == groupID).ToList();
                 for (int i = 0; i < students.Count; i++)
                 {

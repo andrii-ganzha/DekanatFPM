@@ -222,6 +222,26 @@
     <Compile Include="Migrations\202108100837344_Duration_in_Group.Designer.cs">
       <DependentUpon>202108100837344_Duration_in_Group.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202108100930468_Change_Plan_student_1_TO_1_to_1_TO_MANY.cs" />
+    <Compile Include="Migrations\202108100930468_Change_Plan_student_1_TO_1_to_1_TO_MANY.Designer.cs">
+      <DependentUpon>202108100930468_Change_Plan_student_1_TO_1_to_1_TO_MANY.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108101011295_YearsIndividualPlans_in_Group.cs" />
+    <Compile Include="Migrations\202108101011295_YearsIndividualPlans_in_Group.Designer.cs">
+      <DependentUpon>202108101011295_YearsIndividualPlans_in_Group.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108101013101_YearsIndividualPlans_in_Group_2.cs" />
+    <Compile Include="Migrations\202108101013101_YearsIndividualPlans_in_Group_2.Designer.cs">
+      <DependentUpon>202108101013101_YearsIndividualPlans_in_Group_2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108101022360_YearsIndividualPlans_in_Group_byString.cs" />
+    <Compile Include="Migrations\202108101022360_YearsIndividualPlans_in_Group_byString.Designer.cs">
+      <DependentUpon>202108101022360_YearsIndividualPlans_in_Group_byString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108101059422_PlanWithGroup_in_Student.cs" />
+    <Compile Include="Migrations\202108101059422_PlanWithGroup_in_Student.Designer.cs">
+      <DependentUpon>202108101059422_PlanWithGroup_in_Student.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Group.cs" />
@@ -359,6 +379,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202108100837344_Duration_in_Group.resx">
       <DependentUpon>202108100837344_Duration_in_Group.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108100930468_Change_Plan_student_1_TO_1_to_1_TO_MANY.resx">
+      <DependentUpon>202108100930468_Change_Plan_student_1_TO_1_to_1_TO_MANY.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108101011295_YearsIndividualPlans_in_Group.resx">
+      <DependentUpon>202108101011295_YearsIndividualPlans_in_Group.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108101013101_YearsIndividualPlans_in_Group_2.resx">
+      <DependentUpon>202108101013101_YearsIndividualPlans_in_Group_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108101022360_YearsIndividualPlans_in_Group_byString.resx">
+      <DependentUpon>202108101022360_YearsIndividualPlans_in_Group_byString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108101059422_PlanWithGroup_in_Student.resx">
+      <DependentUpon>202108101059422_PlanWithGroup_in_Student.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

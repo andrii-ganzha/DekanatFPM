@@ -17,6 +17,7 @@ namespace DekanatFPM.Models
         public int Number { get; set; }
         public string Name { get; set; }
         public int Duration { get; set; }
+        public string YearsIndividualPlans { get; set; }
         public Specialization Specialization{ get; set; }
         public ICollection<Student> Students { get; set; }
         public ICollection<Subject> Subjects { get; set; }
@@ -24,6 +25,7 @@ namespace DekanatFPM.Models
         {
             Students = new List<Student>();
             Subjects = new List<Subject>();
+            YearsIndividualPlans = string.Empty;
         }
     }
 }

@@ -9,8 +9,7 @@ namespace DekanatFPM.Models
 {
     public class YearIndividualPlan
     {
-        [Key]
-        [ForeignKey("Student")]
+        public int YearIndividualPlanID { get; set; }
         public int StudentID { get; set; }
         public int Year { get; set; }
         public Student Student { get; set; }

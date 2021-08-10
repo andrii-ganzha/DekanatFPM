@@ -12,9 +12,10 @@ namespace DekanatFPM.Models
         public string Name { get; set; }
         public string Surname { get; set; }
         public DateTime Birthday { get; set; }
+        public bool PlanWithGroup { get; set; }
         public string Gender { get; set; }
         public Group Group { get; set; }
-        public virtual YearIndividualPlan YearIndividualPlan { get; set; }
+        public virtual ICollection<YearIndividualPlan> YearIndividualPlans { get; set; }
 
     }
 }

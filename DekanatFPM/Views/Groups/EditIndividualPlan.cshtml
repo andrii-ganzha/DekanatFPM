@@ -9,14 +9,15 @@
 <div>
     @using (Html.BeginForm("EditIndividualPlan", "Groups", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm-excel" }))
     {
+    <div>
+        Завантажте Excel-файл:
+        <input type="file" name="file" id="file" />
+        <input type='hidden' name='GroupID' value='@ViewBag.GroupID' />
+        <input type='hidden' name='Year' value='@ViewBag.Year' />
         <div>
-            Завантажте Excel-файл:
-            <input type="file" name="file" id="file" />
-            <input type='hidden' name='GroupID' value='@ViewBag.GroupID' />
-            <div>
-                <input type="submit" value="Завантажити" />
-            </div>
+            <input type="submit" value="Завантажити" />
         </div>
+    </div>
     }
 </div>
 

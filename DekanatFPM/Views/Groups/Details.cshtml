@@ -8,8 +8,17 @@
 
 <div>
     <h4>Group</h4>
-    <h3>@Html.ActionLink("Додати індивідуальний план", "AddIndividualPlan", new { groupID = Model.GroupID })</h3>
-    <h3>@Html.ActionLink("Редагувати індивідуальний план", "EditIndividualPlan", new { groupID = Model.GroupID })</h3>
+    @for (int i = 1; i <= Model.Duration; i++)
+    {
+        if (Model.YearsIndividualPlans.Contains(i.ToString()))
+        {
+            <h3>@Html.ActionLink($"Редагувати індивідуальний план на {i}-й курс", "EditIndividualPlan", new { groupID = Model.GroupID, year = i })</h3>
+        }
+        else
+        {
+            <h3>@Html.ActionLink($"Додати індивідуальний план на {i}-й курс", "AddIndividualPlan", new { groupID = Model.GroupID, year = i })</h3>
+        }
+    }
     <hr />
     <dl class="dl-horizontal">
         <dt>
