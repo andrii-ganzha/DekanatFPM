@@ -7,13 +7,13 @@ namespace DekanatFPM.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class YearIndividualPlan_Added : IMigrationMetadata
+    public sealed partial class Added_YearIndividualPlan_upload : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(YearIndividualPlan_Added));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Added_YearIndividualPlan_upload));
         
         string IMigrationMetadata.Id
         {
-            get { return "202108070640357_YearIndividualPlan_Added"; }
+            get { return "202108090917307_Added_YearIndividualPlan_upload"; }
         }
         
         string IMigrationMetadata.Source

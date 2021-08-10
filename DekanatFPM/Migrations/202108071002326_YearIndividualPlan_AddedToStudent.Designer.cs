@@ -13,7 +13,7 @@ namespace DekanatFPM.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202108070652105_YearIndividualPlan_AddedToStudent"; }
+            get { return "202108071002326_YearIndividualPlan_AddedToStudent"; }
         }
         
         string IMigrationMetadata.Source

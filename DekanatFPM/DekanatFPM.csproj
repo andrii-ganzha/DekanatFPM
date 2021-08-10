@@ -198,13 +198,13 @@
     <Compile Include="Migrations\202108041145137_InitialCreate.Designer.cs">
       <DependentUpon>202108041145137_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202108070640357_YearIndividualPlan_Added.cs" />
-    <Compile Include="Migrations\202108070640357_YearIndividualPlan_Added.Designer.cs">
-      <DependentUpon>202108070640357_YearIndividualPlan_Added.cs</DependentUpon>
+    <Compile Include="Migrations\202108071002326_YearIndividualPlan_AddedToStudent.cs" />
+    <Compile Include="Migrations\202108071002326_YearIndividualPlan_AddedToStudent.Designer.cs">
+      <DependentUpon>202108071002326_YearIndividualPlan_AddedToStudent.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202108070652105_YearIndividualPlan_AddedToStudent.cs" />
-    <Compile Include="Migrations\202108070652105_YearIndividualPlan_AddedToStudent.Designer.cs">
-      <DependentUpon>202108070652105_YearIndividualPlan_AddedToStudent.cs</DependentUpon>
+    <Compile Include="Migrations\202108090917307_Added_YearIndividualPlan_upload.cs" />
+    <Compile Include="Migrations\202108090917307_Added_YearIndividualPlan_upload.Designer.cs">
+      <DependentUpon>202108090917307_Added_YearIndividualPlan_upload.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -302,6 +302,7 @@
     <Content Include="Views\TrainingDirections\Edit.cshtml" />
     <Content Include="Views\TrainingDirections\Index.cshtml" />
     <Content Include="Views\Groups\AddIndividualPlan.cshtml" />
+    <Content Include="Views\Groups\EditIndividualPlan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -323,11 +324,11 @@
     <EmbeddedResource Include="Migrations\202108041145137_InitialCreate.resx">
       <DependentUpon>202108041145137_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202108070640357_YearIndividualPlan_Added.resx">
-      <DependentUpon>202108070640357_YearIndividualPlan_Added.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202108071002326_YearIndividualPlan_AddedToStudent.resx">
+      <DependentUpon>202108071002326_YearIndividualPlan_AddedToStudent.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202108070652105_YearIndividualPlan_AddedToStudent.resx">
-      <DependentUpon>202108070652105_YearIndividualPlan_AddedToStudent.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202108090917307_Added_YearIndividualPlan_upload.resx">
+      <DependentUpon>202108090917307_Added_YearIndividualPlan_upload.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

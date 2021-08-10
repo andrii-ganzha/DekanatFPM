@@ -98,7 +98,7 @@ namespace DekanatFPM.Controllers
                 while(workSheet.Cell(numberRow,"A").Value.ToString() != "")
                 {
                     Subject subject = new Subject();
-                    subject.GroupID = 1;
+                    subject.GroupID = groupID;
                     subject.Name = workSheet.Cell(numberRow, "B").Value.ToString();
                     subject.Year = plan.Year;
                     
@@ -117,14 +117,120 @@ namespace DekanatFPM.Controllers
                     subjects.Add(subject);
                     numberRow++;
                 }
-
-                var students = db.Groups.Where(g => g.GroupID == groupID).First().Students.ToList();
+                db.Subjects.AddRange(subjects);
+                db.SaveChanges();
+                var students = db.Students.Where(g => g.GroupID == groupID).ToList();
                 for(int i=0; i<students.Count; i++)
                 {
-                   
+                    plan.StudentID = i + 1;
+                    var planToAdd = new YearIndividualPlan(plan);
+                    db.YearIndividualPlans.Add(planToAdd);
+                    db.SaveChanges();
                 }
             }
 
+            return View(plan);
+        }
+
+        public ActionResult EditIndividualPlan(int groupID)
+        {
+            ViewBag.GroupId = groupID;
+            return View();
+        }
+        
+        //POST: Groups/EditIndividualPlan
+        [HttpPost]
+        public ActionResult EditIndividualPlan(HttpPostedFileBase file, YearIndividualPlan plan, int groupID)
+        {
+            using (XLWorkbook workBook = new XLWorkbook(file.InputStream, XLEventTracking.Disabled))
+            {
+                IXLWorksheet workSheet = workBook.Worksheets.First();
+                string text = workSheet.Cell(5, "o").Value.ToString();
+                plan.Year = int.Parse(text[0].ToString());
+
+                //List<Subject> subjects = new List<Subject>();
+                int numberRow = 10;
+
+                var currentSubjects = db.Subjects.Where(s => s.GroupID == groupID).ToList();
+                int subjectCount = 0;
+
+                while (workSheet.Cell(numberRow, "A").Value.ToString() != "")
+                {
+                    if (subjectCount < currentSubjects.Count())
+                    {
+                        //Subject subject = new Subject();
+                        currentSubjects[subjectCount].GroupID = groupID;
+                        currentSubjects[subjectCount].Name = workSheet.Cell(numberRow, "B").Value.ToString();
+                        currentSubjects[subjectCount].Year = plan.Year;
+
+                        text = workSheet.Cell(numberRow, "G").Value.ToString();
+                        currentSubjects[subjectCount].ControlExam = ControlTextParser(text);
+
+                        text = workSheet.Cell(numberRow, "H").Value.ToString();
+                        currentSubjects[subjectCount].ControlCredit = ControlTextParser(text);
+
+                        text = workSheet.Cell(numberRow, "I").Value.ToString();
+                        currentSubjects[subjectCount].ControlCourseWork = ControlTextParser(text);
+
+                        text = workSheet.Cell(numberRow, "J").Value.ToString();
+                        currentSubjects[subjectCount].ControlIndividual = ControlTextParser(text);
+
+                        db.Entry(currentSubjects[subjectCount]).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        Subject subject = new Subject();
+                        subject.GroupID = groupID;
+                        subject.Name = workSheet.Cell(numberRow, "B").Value.ToString();
+                        subject.Year = plan.Year;
+
+                        text = workSheet.Cell(numberRow, "G").Value.ToString();
+                        subject.ControlExam = ControlTextParser(text);
+
+                        text = workSheet.Cell(numberRow, "H").Value.ToString();
+                        subject.ControlCredit = ControlTextParser(text);
+
+                        text = workSheet.Cell(numberRow, "I").Value.ToString();
+                        subject.ControlCourseWork = ControlTextParser(text);
+
+                        text = workSheet.Cell(numberRow, "J").Value.ToString();
+                        subject.ControlIndividual = ControlTextParser(text);
+
+                        currentSubjects.Add(subject);
+                        db.Subjects.Add(subject);
+                        db.SaveChanges();
+                    }
+
+                    numberRow++;
+                    subjectCount++;
+                }
+                if(subjectCount<currentSubjects.Count())
+                {
+                    //currentSubjects.RemoveRange(subjectCount, currentSubjects.Count() - subjectCount);
+                    for(int i=subjectCount; i<currentSubjects.Count(); i++)
+                    {
+                        //db.Entry(currentSubjects[i]).State = EntityState.Deleted;
+                        db.Subjects.Remove(currentSubjects[i]);
+                        db.SaveChanges();
+                    }
+                }
+                var students = db.Students.Where(g => g.GroupID == groupID).ToList();
+                for (int i = 0; i < students.Count; i++)
+                {
+                    var plans = db.YearIndividualPlans.Include(p => p.Student).Where(p=>p.Student.GroupID==groupID).ToList();
+                    var planToDelit = plans.Where(p => p.StudentID == students[i].StudentID).Where(p=>p.Year==plan.Year).First();
+                    if (planToDelit != null)
+                    {
+                        db.YearIndividualPlans.Remove(planToDelit);
+                        db.SaveChanges();
+                    }
+                    plan.StudentID = i + 1;
+                    var planToAdd = new YearIndividualPlan(plan);
+                    db.YearIndividualPlans.Add(planToAdd);
+                    db.SaveChanges();
+                }
+            }
             return View(plan);
         }
 

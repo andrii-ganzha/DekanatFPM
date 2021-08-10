@@ -17,5 +17,20 @@ namespace DekanatFPM.Models
         public int? ControlIndividual { get; set; }
         public Group Group { get; set; }
 
+        public Subject (Subject obj)
+        {
+            SubjectID = obj.SubjectID;
+            Name = obj.Name;
+            GroupID = obj.GroupID;
+            Year = obj.Year;
+            ControlExam = obj.ControlExam;
+            ControlCredit = obj.ControlCredit;
+            ControlCourseWork = obj.ControlCourseWork;
+            ControlIndividual = obj.ControlIndividual;
+            Group = obj.Group;
+        }
+        public Subject()
+        { }
+
     }
 }

@@ -12,5 +12,11 @@ namespace DekanatFPM.Models
         public int Type { get; set; }
         public Specialization Specialization{ get; set; }
         public ICollection<Student> Students { get; set; }
+        public ICollection<Subject> Subjects { get; set; }
+        public Group()
+        {
+            Students = new List<Student>();
+            Subjects = new List<Subject>();
+        }
     }
 }

@@ -9,6 +9,7 @@
 <div>
     <h4>Group</h4>
     <h3>@Html.ActionLink("Додати індивідуальний план", "AddIndividualPlan", new { groupID = Model.GroupID })</h3>
+    <h3>@Html.ActionLink("Редагувати індивідуальний план", "EditIndividualPlan", new { groupID = Model.GroupID })</h3>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -29,7 +30,7 @@
         <dt>Студенти</dt>
 
         <dd>
-            @foreach(var s in ViewBag.Students)
+            @foreach (var s in ViewBag.Students)
             {
                 <p>@s.Name</p>
             }
