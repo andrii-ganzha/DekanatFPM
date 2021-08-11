@@ -10,6 +10,7 @@ namespace DekanatFPM.Models
         public int SubjectID { get; set; }
         public string Name { get; set; }
         public int GroupID { get; set; }
+        public int StudentID { get; set; }
         public int Year { get; set; }
         public int? ControlExam { get; set; }
         public int? ControlCredit { get; set; }
@@ -22,6 +23,7 @@ namespace DekanatFPM.Models
             SubjectID = obj.SubjectID;
             Name = obj.Name;
             GroupID = obj.GroupID;
+            StudentID = obj.StudentID;
             Year = obj.Year;
             ControlExam = obj.ControlExam;
             ControlCredit = obj.ControlCredit;

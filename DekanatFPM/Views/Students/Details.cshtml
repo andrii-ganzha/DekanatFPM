@@ -8,6 +8,12 @@
 
 <div>
     <h4>Student</h4>
+
+    @for (int i = 1; i <= Model.Group.Duration; i++)
+    {
+        <h3>@Html.ActionLink($"Редагувати індивідуальний план на {i}-й курс", "EditIndividualPlan", new { studentID = Model.StudentID, year = i })</h3>
+    }
+
     <hr />
     <dl class="dl-horizontal">
         <dt>

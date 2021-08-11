@@ -242,6 +242,10 @@
     <Compile Include="Migrations\202108101059422_PlanWithGroup_in_Student.Designer.cs">
       <DependentUpon>202108101059422_PlanWithGroup_in_Student.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202108101332119_StudentID_in_Subject.cs" />
+    <Compile Include="Migrations\202108101332119_StudentID_in_Subject.Designer.cs">
+      <DependentUpon>202108101332119_StudentID_in_Subject.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Group.cs" />
@@ -341,6 +345,7 @@
     <Content Include="Views\Groups\AddIndividualPlan.cshtml" />
     <Content Include="Views\Groups\EditIndividualPlan.cshtml" />
     <Content Include="Views\Groups\View.cshtml" />
+    <Content Include="Views\Students\EditIndividualPlan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -394,6 +399,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202108101059422_PlanWithGroup_in_Student.resx">
       <DependentUpon>202108101059422_PlanWithGroup_in_Student.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108101332119_StudentID_in_Subject.resx">
+      <DependentUpon>202108101332119_StudentID_in_Subject.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

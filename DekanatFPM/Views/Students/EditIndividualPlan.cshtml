@@ -1,0 +1,23 @@
+﻿@model DekanatFPM.Models.Student
+
+@{
+    ViewBag.Title = "EditIndividualPlan";
+}
+
+<h2>EditIndividualPlan</h2>
+
+<div>
+@using (Html.BeginForm("EditIndividualPlan", "Students", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm-excel" }))
+{
+    <div>
+        Завантажте Excel-файл:
+        <input type="file" name="file" id="file" />
+        <input type='hidden' name='StudentID' value='@ViewBag.StudentID' />
+        <input type='hidden' name='Year' value='@ViewBag.Year' />
+        <div>
+            <input type="submit" value="Завантажити" />
+        </div>
+    </div>
+}
+</div>
+

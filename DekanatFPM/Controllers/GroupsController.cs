@@ -255,7 +255,7 @@ namespace DekanatFPM.Controllers
                         db.YearIndividualPlans.Remove(planToDelit);
                         db.SaveChanges();
                     }
-                    plan.StudentID = i + 1;
+                    plan.StudentID = students[i].StudentID;
                     var planToAdd = new YearIndividualPlan(plan);
                     db.YearIndividualPlans.Add(planToAdd);
                     db.SaveChanges();

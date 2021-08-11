@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ClosedXML.Excel;
 using DekanatFPM.Models;
 
 namespace DekanatFPM.Controllers
@@ -28,7 +29,7 @@ namespace DekanatFPM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Student student = db.Students.Find(id);
+            Student student = db.Students.Where(s=>s.StudentID==id).Include(s=>s.Group).ToList().First();
             if (student == null)
             {
                 return HttpNotFound();
@@ -119,6 +120,127 @@ namespace DekanatFPM.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+
+        private int? ControlTextParser(string text)
+        {
+            if (text.Length == 0)
+            {
+                return null;
+            }
+            return int.Parse(text[0].ToString());
+        }
+
+        //GET: Students/EditIndividualPlan
+        public ActionResult EditIndividualPlan (int studentID, int year)
+        {
+            ViewBag.StudentID = studentID;
+            ViewBag.Year = year;
+            return View();
+        }
+
+        //POST: Students/EditindividualPlan
+        [HttpPost]
+        public ActionResult EditIndividualPlan (HttpPostedFileBase file, YearIndividualPlan plan, int studentID, int year)
+        {
+            using (XLWorkbook workBook = new XLWorkbook(file.InputStream, XLEventTracking.Disabled))
+            {
+                IXLWorksheet workSheet = workBook.Worksheets.First();
+                string text = workSheet.Cell(5, "o").Value.ToString();
+                plan.Year = year;
+                var student = db.Students.Find(studentID);
+                int groupID = student.GroupID;
+
+                int numberRow = 10;
+                var currentSubjects = db.Subjects.Where(s => s.StudentID == studentID)
+                                          .Where(s => s.GroupID == student.GroupID)
+                                          .Where(s => s.Year == year)
+                                          .ToList();
+                int subjectCount = 0;
+                while (workSheet.Cell(numberRow, "A").Value.ToString() != "")
+                {
+                    if (subjectCount < currentSubjects.Count())
+                    {
+                        //Subject subject = new Subject();
+                        currentSubjects[subjectCount].GroupID = groupID;
+                        currentSubjects[subjectCount].Name = workSheet.Cell(numberRow, "B").Value.ToString();
+                        currentSubjects[subjectCount].Year = year;
+
+                        text = workSheet.Cell(numberRow, "G").Value.ToString();
+                        currentSubjects[subjectCount].ControlExam = ControlTextParser(text);
+
+                        text = workSheet.Cell(numberRow, "H").Value.ToString();
+                        currentSubjects[subjectCount].ControlCredit = ControlTextParser(text);
+
+                        text = workSheet.Cell(numberRow, "I").Value.ToString();
+                        currentSubjects[subjectCount].ControlCourseWork = ControlTextParser(text);
+
+                        text = workSheet.Cell(numberRow, "J").Value.ToString();
+                        currentSubjects[subjectCount].ControlIndividual = ControlTextParser(text);
+
+                        db.Entry(currentSubjects[subjectCount]).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        Subject subject = new Subject();
+                        subject.GroupID = groupID;
+                        subject.Name = workSheet.Cell(numberRow, "B").Value.ToString();
+                        subject.Year = year;
+
+                        text = workSheet.Cell(numberRow, "G").Value.ToString();
+                        subject.ControlExam = ControlTextParser(text);
+
+                        text = workSheet.Cell(numberRow, "H").Value.ToString();
+                        subject.ControlCredit = ControlTextParser(text);
+
+                        text = workSheet.Cell(numberRow, "I").Value.ToString();
+                        subject.ControlCourseWork = ControlTextParser(text);
+
+                        text = workSheet.Cell(numberRow, "J").Value.ToString();
+                        subject.ControlIndividual = ControlTextParser(text);
+
+                        currentSubjects.Add(subject);
+                        db.Subjects.Add(subject);
+                        db.SaveChanges();
+                    }
+
+                    numberRow++;
+                    subjectCount++;
+                }
+                if (subjectCount < currentSubjects.Count())
+                {
+                    //currentSubjects.RemoveRange(subjectCount, currentSubjects.Count() - subjectCount);
+                    for (int i = subjectCount; i < currentSubjects.Count(); i++)
+                    {
+                        //db.Entry(currentSubjects[i]).State = EntityState.Deleted;
+                        db.Subjects.Remove(currentSubjects[i]);
+                        db.SaveChanges();
+                    }
+                }
+
+                var planToDelit = db.YearIndividualPlans.Include(p => p.Student)
+                                                        .Where(p => p.StudentID == studentID)
+                                                        .Where(p => p.Year == year)
+                                                        .FirstOrDefault();
+                if(planToDelit != null)
+                {
+                    db.YearIndividualPlans.Remove(planToDelit);
+                    db.SaveChanges();
+                }
+
+                plan.StudentID = student.StudentID;
+                var planToAdd = new YearIndividualPlan(plan);
+                db.YearIndividualPlans.Add(planToAdd);
+                db.SaveChanges();
+                student.PlanWithGroup = false;
+                db.Entry(student).State = EntityState.Modified;
+                db.SaveChanges();
+
+            }
+            return View(plan);
+        }
+
 
         protected override void Dispose(bool disposing)
         {
