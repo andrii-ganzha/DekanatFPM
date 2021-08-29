@@ -29,7 +29,7 @@ namespace DekanatFPM.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Group group = db.Groups.Find(id);
+            Group group = db.Groups.Where(g => g.GroupID == id).Include(g => g.Specialization).First();
             if (group == null)
             {
                 return HttpNotFound();

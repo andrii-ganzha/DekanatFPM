@@ -32,6 +32,7 @@ namespace DekanatFPM.Models
         public DbSet<TrainingDirection> TrainingDirections { get; set; }
         public DbSet<YearIndividualPlan> YearIndividualPlans { get; set; }
         public DbSet<Subject> Subjects { get; set; }
+        public DbSet<Statement> Statements { get; set; }
 
         public static ApplicationDbContext Create()
         {

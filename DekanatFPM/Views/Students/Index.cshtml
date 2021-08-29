@@ -12,7 +12,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Group.GroupID)
+            Група
+        </th>
+        <th>
+            Залікова кижка
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -32,7 +35,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Group.GroupID)
+            @Html.DisplayFor(modelItem => item.Group.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RecordBook)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Name)

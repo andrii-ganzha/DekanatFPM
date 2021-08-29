@@ -17,6 +17,7 @@ namespace DekanatFPM.Models
         public int? ControlCourseWork { get; set; }
         public int? ControlIndividual { get; set; }
         public Group Group { get; set; }
+        public virtual ICollection<Statement> Statements { get; set; }
 
         public Subject (Subject obj)
         {

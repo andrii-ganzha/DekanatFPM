@@ -200,6 +200,8 @@ namespace DekanatFPM.Controllers
                         text = workSheet.Cell(numberRow, "J").Value.ToString();
                         subject.ControlIndividual = ControlTextParser(text);
 
+                        subject.StudentID = studentID;
+
                         currentSubjects.Add(subject);
                         db.Subjects.Add(subject);
                         db.SaveChanges();

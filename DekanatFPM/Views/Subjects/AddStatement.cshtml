@@ -1,0 +1,22 @@
+﻿@model DekanatFPM.Models.Statement
+
+@{
+    ViewBag.Title = "AddStatement";
+}
+
+<h2>AddStatement</h2>
+
+<div>
+    @using (Html.BeginForm("AddStatement", "Subjects", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm-excel" }))
+    {
+    <div>
+        Завантажте Excel-файл:
+        <input type="file" name="file" id="file" />
+        <input type='hidden' name='subjectID' value='@ViewBag.subjectID' />
+        <div>
+            <input type="submit" value="Завантажити" />
+        </div>
+    </div>
+    }
+</div>
+
